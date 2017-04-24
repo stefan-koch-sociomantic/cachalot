@@ -1,0 +1,15 @@
+#!/bin/sh
+set -xe
+
+cd $(dirname $0)/snippets
+
+for s in "$@"
+do
+	./$s
+done
+
+# Clean all temporary apt files
+apt-get -y autoremove
+apt-mark showauto | apt purge -y
+apt-get -y clean
+rm -rf /var/lib/apt/lists/*
