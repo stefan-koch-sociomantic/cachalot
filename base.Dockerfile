@@ -12,7 +12,7 @@ LABEL \
     com.sociomantic.version.fpm=$VERSION_FPM
 
 COPY docker/ /docker-tmp
-RUN /docker-tmp/run-snippets \
+RUN /docker-tmp/run-scripts base \
 		base \
 		git \
 		fpm \
