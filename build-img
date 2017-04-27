@@ -93,10 +93,11 @@ do
 		sed -i 's/^\(FROM\s\+.\+\)$/\1:'$dist'/' "$tmpdockerfile"
 	fi
 	echo BUILDING $tag
-	if ! docker build $DOCKER_BUILD_FLAGS -t "$tag" -f "$tmpdockerfile" .
+	docker build $DOCKER_BUILD_FLAGS -t "$tag" -f "$tmpdockerfile" .
+	status=$?
+	if test "$status" -ne 0
 	then
-		status=$?
-		echo "ERROR building $tag" >&2
+		echo "ERROR building $tag (status: $status)" >&2
 		exit $status
 	fi
 	if test "$push" = 1
