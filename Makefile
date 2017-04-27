@@ -45,3 +45,7 @@ $1.$2: $1.Dockerfile
 	./build-img $$(build_args) $$< $$(dockerhub_org) $2
 endef
 $(foreach d,$(dists),$(foreach i,$(images),$(eval $(call create_recipe,$i,$d))))
+
+# TODO: Generate from Dockerfiles
+dlang.trusty: base.trusty
+dlang.xenial: base.xenial
