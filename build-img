@@ -79,11 +79,9 @@ branch=$(git rev-parse --abbrev-ref HEAD || echo UNKNOWN)
 for dist in "$@"
 do
 	tmpdockerfile="$dockerfile.$branch-$dist.tmp"
-
+	cp "$dockerfile" "$tmpdockerfile"
 	trap "rm -f '$tmpdockerfile'; exit 1" INT TERM QUIT
 
-	tag="$img:$branch-$dist"
-	cp "$dockerfile" "$tmpdockerfile"
 	ours=$(grep '^FROM\s\+sociomantictsunami/' "$tmpdockerfile" || true)
 	# If it's based in one of our images, then we include the branch,
 	# otherwise we assume is an ubuntu image and only use the dist.
@@ -93,9 +91,12 @@ do
 	else
 		sed -i 's/^\(FROM\s\+.\+\)$/\1:'$dist'/' "$tmpdockerfile"
 	fi
+
+	tag="$img:$branch-$dist"
 	echo BUILDING $tag
 	docker build $DOCKER_BUILD_FLAGS -t "$tag" -f "$tmpdockerfile" .
 	status=$?
+	rm -f "$tmpdockerfile"
 	if test "$status" -ne 0
 	then
 		echo "ERROR building $tag (status: $status)" >&2
