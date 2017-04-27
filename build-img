@@ -75,12 +75,13 @@ shift 2
 
 img="$dockerhub_org/$(basename $dockerfile .Dockerfile)"
 branch=$(git rev-parse --abbrev-ref HEAD || echo UNKNOWN)
-tmpdockerfile="$dockerfile.$branch.tmp"
-
-trap "rm -f '$tmpdockerfile'; exit 1" INT TERM QUIT
 
 for dist in "$@"
 do
+	tmpdockerfile="$dockerfile.$branch-$dist.tmp"
+
+	trap "rm -f '$tmpdockerfile'; exit 1" INT TERM QUIT
+
 	tag="$img:$branch-$dist"
 	cp "$dockerfile" "$tmpdockerfile"
 	ours=$(grep '^FROM\s\+sociomantictsunami/' "$tmpdockerfile" || true)
