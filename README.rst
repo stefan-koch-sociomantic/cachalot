@@ -6,3 +6,5 @@ one Dockerfile.
 
 The ``docker/`` directory contains all the script needed to use when building
 images.
+
+Please take a look to the Makefile for configuration options.
