@@ -11,7 +11,7 @@ Usage: $0 [options] IMAGE [BUILD ARGS]
 
 Builds a docker IMAGE. IMAGE is expected to be in the form:
   ORG/REPO:DIST-TAG
-Ehere ORG is the DockerHub organization, REPO is the name of the DockerHub
+Where ORG is the DockerHub organization, REPO is the name of the DockerHub
 image repository, TAG is the logical tag for the image version, and DIST is the
 distro to use as the base Ubuntu. The Dockerfile file name is expected to be in
 the form REPO.Dockerfile and a temporary Dockerfile will be generated based on
