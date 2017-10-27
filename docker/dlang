@@ -8,6 +8,17 @@ set -xeu
 # Get utility stuff
 . ./util.sh
 
+
+# Add extra DMD D-APT repo
+dist="$(lsb_release -cs)"
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EBCF975E5BA24D5E
+wget http://master.dl.sourceforge.net/project/d-apt/files/d-apt.list \
+               -O /etc/apt/sources.list.d/d-apt.list
+
+# Add extra dlang APT repositories from Sociomantic in Bintray
+echo "deb https://dl.bintray.com/sociomantic-tsunami/dlang $dist release" \
+        >> /etc/apt/sources.list.d/sociomantic-tsunami.list
+
 # Install dlang packages
 apt update
 apt_pin_install \
