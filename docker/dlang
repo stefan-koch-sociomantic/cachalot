@@ -19,6 +19,13 @@ wget http://master.dl.sourceforge.net/project/d-apt/files/d-apt.list \
 echo "deb https://dl.bintray.com/sociomantic-tsunami/dlang $dist release" \
         >> /etc/apt/sources.list.d/sociomantic-tsunami.list
 
+# Add extra dlang-community APT repository (also in Bintray)
+echo '# dlang-community repos' \
+        > /etc/apt/sources.list.d/dlang-community.list
+echo "deb https://dl.bintray.com/dlang-community/apt $dist release" \
+        >> /etc/apt/sources.list.d/dlang-community.list
+
+
 # Install dlang packages
 apt update
 apt_pin_install \
